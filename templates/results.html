@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Segmentation Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f8ff; /* Light blue background */
+            padding-top: 20px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            color: #0077be;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .result-card {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .result-card img {
+            max-width: 100%;
+            height: auto;
+        }
+        .navbar {
+            background-color: #0077be;
+            margin-bottom: 20px;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .no-results {
+            text-align: center;
+            margin: 40px 0;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Underwater Image Segmentation</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/results">All Results</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="header">All Segmentation Results</h1>
+        
+        {% if results %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {% for result in results %}
+                <div class="col">
+                    <div class="card result-card h-100">
+                        <img src="{{ result.path }}" class="card-img-top" alt="Segmentation Result">
+                        <div class="card-body">
+                            <h5 class="card-title">Result {{ loop.index }}</h5>
+                            <p class="card-text">Filename: {{ result.filename }}</p>
+                            <a href="{{ result.path }}" download class="btn btn-primary btn-sm">Download</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-results">
+                <h3>No results found</h3>
+                <p>Go to the <a href="/">home page</a> to segment an image</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
